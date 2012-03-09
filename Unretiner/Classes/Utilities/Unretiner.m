@@ -38,7 +38,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Unretiner); // Macro to create singleton methods.
 ///////////////////////////////////////////////////////////////////////////////////////
 
 - (void)unretinaUrls:(NSArray *)urls {
-	[self unretinaUrls:urls andStayOpen:NO];
+	[self unretinaUrls:urls andStayOpen:YES];
 }
 
 - (void)unretinaUrls:(NSArray*)urls andStayOpen:(BOOL)stayOpen {
