@@ -7,12 +7,20 @@
 
 #import "UnretinerAppDelegate.h"
 #import "UnretinaViewController.h"
+#import "Unretiner.h"
+
+@interface UnretinerAppDelegate () 
+
+@property (nonatomic, assign) BOOL _keepOpen;
+
+@end
 
 @implementation UnretinerAppDelegate
 
 @synthesize window;
 @synthesize view;
 @synthesize viewController;
+@synthesize _keepOpen;
 
 - (void)dealloc {
     self.window = nil;
@@ -24,10 +32,21 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+	// Set up some defaults if they're not already set by the user
+	if ([[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsKeyForSaveToOrigin] == nil) {
+		[[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyForSaveToOrigin];
+	}
+	if ([[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsKeyForOverwrite] == nil) {
+		[[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyForOverwrite];
+	}
+	[[NSUserDefaults standardUserDefaults] synchronize];
+	
     // Add the view from our controller
     viewController = [[UnretinaViewController alloc] initWithNibName:@"UnretinaViewController" bundle:nil];
     viewController.view.bounds = self.view.bounds;
     [view addSubview:viewController.view];
+	
+	_keepOpen = YES; // If we reach this point, the user has opened the app to keep it open
 }
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication {
@@ -43,12 +62,13 @@
 	}
     
     // Send to the controller
-    [viewController unretinaUrls:urls];
+    [[Unretiner sharedInstance] unretinaUrls:urls andStayOpen:_keepOpen];
 }
 
-- (void)appication:(NSApplication*)sender openFile:(NSString*)file {
-    // Send to the controller
-    [viewController unretinaUrls:[NSArray arrayWithObject:[NSURL fileURLWithPath:file]]];
-}
+//- (void)application:(NSApplication*)sender openFile:(NSString*)file {
+//	NSLog(@"application:openFile:");
+//    // Send to the controller
+//    [viewController unretinaUrls:[NSArray arrayWithObject:[NSURL fileURLWithPath:file]]];
+//}
 
 @end

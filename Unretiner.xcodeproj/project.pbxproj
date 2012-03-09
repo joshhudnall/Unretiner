@@ -22,6 +22,7 @@
 		17C3A37413E3FF1600294FBE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17C3A37313E3FF1600294FBE /* Cocoa.framework */; };
 		17C3A39213E3FF1700294FBE /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17C3A39113E3FF1700294FBE /* SenTestingKit.framework */; };
 		17C3A39313E3FF1700294FBE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17C3A37313E3FF1600294FBE /* Cocoa.framework */; };
+		726F622B150AAB1F00B2C276 /* Unretiner.m in Sources */ = {isa = PBXBuildFile; fileRef = 726F622A150AAB1F00B2C276 /* Unretiner.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,7 +53,7 @@
 		1713EFAE13E57A310019EA65 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		1713EFB313E588740019EA65 /* NSDroppableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDroppableView.h; sourceTree = "<group>"; };
 		1713EFB413E588740019EA65 /* NSDroppableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDroppableView.m; sourceTree = "<group>"; };
-		1713EFB613E58E800019EA65 /* NSBitmapImageRep+Resizing.h */ = {isa = PBXFileReference; fileEncoding = 4; path = "NSBitmapImageRep+Resizing.h"; sourceTree = "<group>"; };
+		1713EFB613E58E800019EA65 /* NSBitmapImageRep+Resizing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBitmapImageRep+Resizing.h"; sourceTree = "<group>"; };
 		1713EFB713E58E800019EA65 /* NSBitmapImageRep+Resizing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBitmapImageRep+Resizing.m"; sourceTree = "<group>"; };
 		17C3A36F13E3FF1600294FBE /* Unretiner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Unretiner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17C3A37313E3FF1600294FBE /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -61,6 +62,10 @@
 		17C3A37813E3FF1600294FBE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		17C3A39013E3FF1700294FBE /* UnretinerTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnretinerTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		17C3A39113E3FF1700294FBE /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		726F6229150AAB1F00B2C276 /* Unretiner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Unretiner.h; sourceTree = "<group>"; };
+		726F622A150AAB1F00B2C276 /* Unretiner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Unretiner.m; sourceTree = "<group>"; };
+		726F622C150AAB3D00B2C276 /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynthesizeSingleton.h; sourceTree = "<group>"; };
+		726F622D150AB5AF00B2C276 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +126,8 @@
 				1713EF9313E526A10019EA65 /* UnretinerAppDelegate.m */,
 				1713EF9013E526A10019EA65 /* UnretinaViewController.h */,
 				1713EF9113E526A10019EA65 /* UnretinaViewController.m */,
+				1713EF9F13E526A10019EA65 /* UnretinaViewController.xib */,
+				726F622D150AB5AF00B2C276 /* Constants.h */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -135,12 +142,15 @@
 		1713EF9513E526A10019EA65 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				726F6229150AAB1F00B2C276 /* Unretiner.h */,
+				726F622A150AAB1F00B2C276 /* Unretiner.m */,
 				1713EF9613E526A10019EA65 /* main.m */,
 				1713EF9713E526A10019EA65 /* Unretiner-Prefix.pch */,
 				1713EFAB13E579760019EA65 /* NSURL+Unretina.h */,
 				1713EFAC13E579760019EA65 /* NSURL+Unretina.m */,
 				1713EFB613E58E800019EA65 /* NSBitmapImageRep+Resizing.h */,
 				1713EFB713E58E800019EA65 /* NSBitmapImageRep+Resizing.m */,
+				726F622C150AAB3D00B2C276 /* SynthesizeSingleton.h */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -153,7 +163,6 @@
 				1713EF9913E526A10019EA65 /* Credits.rtf */,
 				1713EF9B13E526A10019EA65 /* InfoPlist.strings */,
 				1713EF9D13E526A10019EA65 /* MainMenu.xib */,
-				1713EF9F13E526A10019EA65 /* UnretinaViewController.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -258,6 +267,7 @@
 		17C3A36613E3FF1600294FBE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0420;
 				ORGANIZATIONNAME = Bonobo;
 			};
 			buildConfigurationList = 17C3A36913E3FF1600294FBE /* Build configuration list for PBXProject "Unretiner" */;
@@ -328,6 +338,7 @@
 				1713EFAD13E579760019EA65 /* NSURL+Unretina.m in Sources */,
 				1713EFB513E588740019EA65 /* NSDroppableView.m in Sources */,
 				1713EFB813E58E800019EA65 /* NSBitmapImageRep+Resizing.m in Sources */,
+				726F622B150AAB1F00B2C276 /* Unretiner.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,6 +390,7 @@
 				1713EFA013E526A10019EA65 /* en */,
 			);
 			name = UnretinaViewController.xib;
+			path = ../View;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

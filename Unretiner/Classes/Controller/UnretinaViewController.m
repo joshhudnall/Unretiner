@@ -7,13 +7,22 @@
 
 #import "UnretinaViewController.h"
 #import "NSURL+Unretina.h"
+#import "Unretiner.h"
+
+
+@interface UnretinaViewController ()
+
+@end
+
 
 @implementation UnretinaViewController
 
 static NSString* const kRetinaString = @"@2x";
 static NSString* const kHdString = @"-hd";
 
-@synthesize checkBox;
+@synthesize saveToOriginCheckBox;
+@synthesize overwriteCheckBox;
+@synthesize tableView;
 
 #pragma mark - Initialisation
 
@@ -27,105 +36,30 @@ static NSString* const kHdString = @"-hd";
     return s;
 }
 
+- (void)awakeFromNib {
+	[super awakeFromNib];
+	
+	overwriteCheckBox.state = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyForOverwrite];
+	saveToOriginCheckBox.state = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyForSaveToOrigin];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(unretinerDidFinishProcessing)
+												 name:UnretinerDidFinishProcessing
+											   object:nil];
+}
+
+- (void)unretinerDidFinishProcessing {
+	// All we really need to do right now is refresh the table view
+	[self.tableView reloadData];
+}
+
 #pragma mark - Memory Management
 
 - (void)dealloc {
-    self.checkBox = nil;
     [super dealloc];
 }
 
 #pragma mark - Private Methods
-
-// Retrieves a folder to save to
-- (NSURL*)getSaveFolder:(NSURL*)url {
-    NSOpenPanel *panel = [NSOpenPanel openPanel]; 
-    [panel setCanChooseDirectories:YES]; 
-    [panel setCanChooseFiles:NO];
-    [panel setAllowsMultipleSelection:NO];
-    [panel setDirectoryURL:url];
-    panel.prompt = @"Export Here";
-    panel.title = @"Select folder to save converted files.";
-    if ([panel runModal] == NSOKButton) {
-        // Got it, return the URL
-        return [panel URL];
-    }
-    
-    return nil;
-}
-
-- (BOOL)isDirectory:(NSURL*)url {
-    // Determine if it is a directory
-    return CFURLHasDirectoryPath((CFURLRef)url);
-}
-
-- (void)unretinaUrls:(NSArray*)urls savePath:(NSURL*)savePath errors:(NSMutableArray*)errors warnings:(NSMutableArray*)warnings recursive:(BOOL)recursive {
-    // Parse each file passed in
-    for (NSURL* url in urls) {
-        if (url) {
-            BOOL directory = [self isDirectory:url];
-            if (recursive && directory) {
-                // Folder and we want to jump into it, grab the urls
-                NSFileManager* fileManager = [NSFileManager defaultManager];
-                NSArray* contents = [fileManager contentsOfDirectoryAtURL:url includingPropertiesForKeys:nil options:NSDirectoryEnumerationSkipsHiddenFiles | NSDirectoryEnumerationSkipsSubdirectoryDescendants error:nil];
-                
-                // Parse them, but don't go into any further sub folders
-                [self unretinaUrls:contents savePath:savePath errors:errors warnings:warnings recursive:NO];
-            }
-            else if (!directory) {
-                // Parse the file
-                [url unretina:savePath errors:errors warnings:warnings overwrite:[checkBox state]];
-            }
-        }
-    }
-}
-
-#pragma mark - public methods
-
-// Converts an array of URLs to non retina files
-- (void)unretinaUrls:(NSArray*)urls {
-    // Extract the default export folder
-    if ([urls count] > 0) {
-        NSURL* firstUrl = [urls objectAtIndex:0];
-        if (![self isDirectory:firstUrl]) {
-            firstUrl = [firstUrl URLByDeletingLastPathComponent];
-        }
-        NSURL* savePath = [self getSaveFolder:firstUrl];
-            
-        if (savePath) {
-            // Arrays to store warnings and errors
-            NSMutableArray* errors = [NSMutableArray array];
-            NSMutableArray* warnings = [NSMutableArray array];
-            
-            // Do it!
-            [self unretinaUrls:urls savePath:savePath errors:errors warnings:warnings recursive:YES];
-            
-            // Show the results
-            if ([errors count] > 0 || [warnings count] > 0) {
-                NSMutableString* message = [NSMutableString string];
-                if ([warnings count] > 0) {
-                    [message appendString:@"Please check the following warnings:\r\n\r\n"];
-                    for (NSString* s in warnings) {
-                        [message appendFormat:@"%@\r\n", s];
-                    }
-                    [message appendString:@"\r\n\r\n"];
-                }
-                
-                if ([errors count] > 0) {
-                    [message appendString:@"The following errors occured:\r\n\r\n"];
-                    for (NSString* s in errors) {
-                        [message appendFormat:@"%@\r\n", s];
-                    }
-                }
-                
-                NSRunAlertPanel(@"Conversion Complete.", 
-                                message,
-                                @"OK", nil, nil);
-            }
-        }
-    }
-}
-
-#pragma mark - View Events
 
 - (IBAction)onSelectFolder:(id)sender {  
     // Select the files to convert
@@ -136,10 +70,23 @@ static NSString* const kHdString = @"-hd";
 	[panel setDelegate:self];
 	[panel setCanCreateDirectories:YES];
 	panel.title = @"Select @2x or -hd retina files";
+	
     if ([panel runModal] == NSOKButton) {
         // Success, process all the files
-        [self unretinaUrls:panel.URLs];
+        [[Unretiner sharedInstance] unretinaUrls:panel.URLs];
     }
+}
+
+- (IBAction)onCheckOverwriteChange:(id)sender {
+	BOOL overwrite = overwriteCheckBox.state;
+	[[NSUserDefaults standardUserDefaults] setBool:overwrite forKey:kDefaultsKeyForOverwrite];
+	[[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (IBAction)onCheckOriginChange:(id)sender {
+	BOOL origin = saveToOriginCheckBox.state;
+	[[NSUserDefaults standardUserDefaults] setBool:origin forKey:kDefaultsKeyForSaveToOrigin];
+	[[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 #pragma mark - NSOpenSavePanelDelegate
@@ -147,7 +94,7 @@ static NSString* const kHdString = @"-hd";
 - (BOOL)allowFile:(NSString*)filename {
     // Allow directories
     NSURL* url = [NSURL fileURLWithPath:filename];
-    if (url && [self isDirectory:url])
+    if (url && [Unretiner isDirectory:url])
         return YES;
     
     // See if the file is a retina image
@@ -168,7 +115,35 @@ static NSString* const kHdString = @"-hd";
 
 - (void)filesDropped:(NSArray*)urls {
     // Process them
-    [self unretinaUrls:urls];
+    [[Unretiner sharedInstance] unretinaUrls:urls];
 }
+
+#pragma mark - Table View Data Source
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView {	
+	return [[[Unretiner sharedInstance] errors] count] + [[[Unretiner sharedInstance] warnings] count];
+}
+
+- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+	NSArray *errors = [[Unretiner sharedInstance] errors];
+	NSArray *warnings = [[Unretiner sharedInstance] warnings];
+	
+	if ([tableColumn.identifier isEqualToString:@"Type"]) {
+		if (row < [errors count]) {
+			return @"Error";
+		} else {
+			return @"Warning";
+		}
+	} else {
+		if (row < [errors count]) {
+			return [errors objectAtIndex:row];
+		} else {
+			return [warnings objectAtIndex:row - [errors count]];
+		}
+	}
+	
+	return nil;
+}
+
 
 @end

@@ -8,14 +8,15 @@
 #import <Cocoa/Cocoa.h>
 #import "NSDroppableView.h"
 
-@interface UnretinaViewController : NSViewController<NSOpenSavePanelDelegate, NSDroppableViewDelegate>
+@interface UnretinaViewController : NSViewController<NSOpenSavePanelDelegate, NSDroppableViewDelegate,NSTableViewDataSource>
 
-@property (assign) IBOutlet NSButton* checkBox;
+@property (assign) IBOutlet NSButton* saveToOriginCheckBox;
+@property (assign) IBOutlet NSButton* overwriteCheckBox;
+@property (assign) IBOutlet NSTableView *tableView;
 
-// Plus button handler
+// Button handlers
 - (IBAction)onSelectFolder:(id)sender;
+- (IBAction)onCheckOverwriteChange:(id)sender;
 
-// Converts an array of URLs to non retina files
-- (void)unretinaUrls:(NSArray*)urls;
 
 @end
