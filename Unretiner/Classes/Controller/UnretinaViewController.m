@@ -26,7 +26,7 @@ static NSString* const kHdString = @"-hd";
 
 #pragma mark - Initialisation
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+- (id)initWithNibName:(NSString*)nibNameOrNil bundle:(NSBundle*)nibBundleOrNil {
     id s = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (s == self) {
         // Register for drag and drop
@@ -63,7 +63,7 @@ static NSString* const kHdString = @"-hd";
 
 - (IBAction)onSelectFolder:(id)sender {  
     // Select the files to convert
-	NSOpenPanel *panel = [NSOpenPanel openPanel]; 
+	NSOpenPanel*panel = [NSOpenPanel openPanel]; 
 	[panel setCanChooseDirectories:YES]; 
 	[panel setCanChooseFiles:YES];
 	[panel setAllowsMultipleSelection:YES];
@@ -101,12 +101,12 @@ static NSString* const kHdString = @"-hd";
     return url && [url isRetinaImage];
 }
 
-- (BOOL)panel:(id)sender shouldEnableURL:(NSURL *)url {
+- (BOOL)panel:(id)sender shouldEnableURL:(NSURL*)url {
     // Only enable valid files
 	return [self allowFile:[url path]];
 }
 
-- (BOOL)panel:(id)sender shouldShowFilename:(NSString *)filename {
+- (BOOL)panel:(id)sender shouldShowFilename:(NSString*)filename {
     // Only show valid files
 	return [self allowFile:filename];
 }
@@ -120,13 +120,13 @@ static NSString* const kHdString = @"-hd";
 
 #pragma mark - Table View Data Source
 
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView {	
+- (NSInteger)numberOfRowsInTableView:(NSTableView*)aTableView {	
 	return [[[Unretiner sharedInstance] errors] count] + [[[Unretiner sharedInstance] warnings] count];
 }
 
-- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-	NSArray *errors = [[Unretiner sharedInstance] errors];
-	NSArray *warnings = [[Unretiner sharedInstance] warnings];
+- (id)tableView:(NSTableView*)tableView objectValueForTableColumn:(NSTableColumn*)tableColumn row:(NSInteger)row {
+	NSArray* errors = [[Unretiner sharedInstance] errors];
+	NSArray* warnings = [[Unretiner sharedInstance] warnings];
 	
 	if ([tableColumn.identifier isEqualToString:@"Type"]) {
 		if (row < [errors count]) {

@@ -111,7 +111,6 @@
 			isa = PBXGroup;
 			children = (
 				1713EF8F13E526A10019EA65 /* Controller */,
-				1713EF9413E526A10019EA65 /* Model */,
 				1713EF9513E526A10019EA65 /* Utilities */,
 				1713EF9813E526A10019EA65 /* View */,
 			);
@@ -126,26 +125,18 @@
 				1713EF9313E526A10019EA65 /* UnretinerAppDelegate.m */,
 				1713EF9013E526A10019EA65 /* UnretinaViewController.h */,
 				1713EF9113E526A10019EA65 /* UnretinaViewController.m */,
-				1713EF9F13E526A10019EA65 /* UnretinaViewController.xib */,
 				726F622D150AB5AF00B2C276 /* Constants.h */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
 		};
-		1713EF9413E526A10019EA65 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		1713EF9513E526A10019EA65 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				726F6229150AAB1F00B2C276 /* Unretiner.h */,
-				726F622A150AAB1F00B2C276 /* Unretiner.m */,
 				1713EF9613E526A10019EA65 /* main.m */,
 				1713EF9713E526A10019EA65 /* Unretiner-Prefix.pch */,
+				726F6229150AAB1F00B2C276 /* Unretiner.h */,
+				726F622A150AAB1F00B2C276 /* Unretiner.m */,
 				1713EFAB13E579760019EA65 /* NSURL+Unretina.h */,
 				1713EFAC13E579760019EA65 /* NSURL+Unretina.m */,
 				1713EFB613E58E800019EA65 /* NSBitmapImageRep+Resizing.h */,
@@ -163,6 +154,7 @@
 				1713EF9913E526A10019EA65 /* Credits.rtf */,
 				1713EF9B13E526A10019EA65 /* InfoPlist.strings */,
 				1713EF9D13E526A10019EA65 /* MainMenu.xib */,
+				1713EF9F13E526A10019EA65 /* UnretinaViewController.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -390,7 +382,6 @@
 				1713EFA013E526A10019EA65 /* en */,
 			);
 			name = UnretinaViewController.xib;
-			path = ../View;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

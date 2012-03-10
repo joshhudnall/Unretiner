@@ -9,18 +9,18 @@
 
 @interface Unretiner : NSObject
 
-@property (nonatomic, retain) NSMutableArray *errors;
-@property (nonatomic, retain) NSMutableArray *warnings;
+@property (nonatomic, retain) NSMutableArray* errors;
+@property (nonatomic, retain) NSMutableArray* warnings;
 
 // Returns singleton instance
-+ (Unretiner *)sharedInstance;
++ (Unretiner*)sharedInstance;
 
-// Converts an array of URLs to non retina files
-- (void)unretinaUrls:(NSArray *)urls;
-- (void)unretinaUrls:(NSArray *)urls andStayOpen:(BOOL)stayOpen;
+// Unretiner Methods
+- (void)unretinaUrls:(NSArray*)urls;
+- (void)unretinaUrls:(NSArray*)urls andStayOpen:(BOOL)stayOpen;
 
 // Utility methods
-+ (NSURL *)getSaveFolder:(NSURL*)url;
++ (NSURL*)getSaveFolder:(NSURL*)url;
 + (BOOL)isDirectory:(NSURL*)url;
 
 @end

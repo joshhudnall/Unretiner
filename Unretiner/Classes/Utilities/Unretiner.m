@@ -37,18 +37,18 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Unretiner); // Macro to create singleton methods.
 #pragma mark - Unretiner Methods
 ///////////////////////////////////////////////////////////////////////////////////////
 
-- (void)unretinaUrls:(NSArray *)urls {
+- (void)unretinaUrls:(NSArray*)urls {
 	[self unretinaUrls:urls andStayOpen:YES];
 }
 
 - (void)unretinaUrls:(NSArray*)urls andStayOpen:(BOOL)stayOpen {
 	NSURL* baseUrl = [urls objectAtIndex:0];
-	if ( ! [Unretiner isDirectory:baseUrl]) {
+	if (![Unretiner isDirectory:baseUrl]) {
 		baseUrl = [baseUrl URLByDeletingLastPathComponent];
 	}
-	if ( ! [Unretiner isDirectory:baseUrl]) {
+	if (![Unretiner isDirectory:baseUrl]) {
 		baseUrl = [baseUrl URLByDeletingLastPathComponent];
-	} // Not sure why, but this needs to be called twice (or a better mechanism be implemented)
+	} // TODO: Not sure why, but this needs to be called twice (or a better mechanism be implemented)
 	
 	BOOL saveToOrigin = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyForSaveToOrigin];
 	NSURL* savePath = (saveToOrigin) ? baseUrl : [Unretiner getSaveFolder:baseUrl];
@@ -99,8 +99,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Unretiner); // Macro to create singleton methods.
 ///////////////////////////////////////////////////////////////////////////////////////
 
 // Retrieves a folder to save to
-+ (NSURL *)getSaveFolder:(NSURL*)url {
-    NSOpenPanel *panel = [NSOpenPanel openPanel]; 
++ (NSURL*)getSaveFolder:(NSURL*)url {
+    NSOpenPanel* panel = [NSOpenPanel openPanel]; 
     [panel setCanChooseDirectories:YES]; 
     [panel setCanChooseFiles:NO];
     [panel setAllowsMultipleSelection:NO];

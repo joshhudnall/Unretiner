@@ -12,7 +12,7 @@
 
 @property (assign) IBOutlet NSButton* saveToOriginCheckBox;
 @property (assign) IBOutlet NSButton* overwriteCheckBox;
-@property (assign) IBOutlet NSTableView *tableView;
+@property (assign) IBOutlet NSTableView* tableView;
 
 // Button handlers
 - (IBAction)onSelectFolder:(id)sender;

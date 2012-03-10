@@ -65,10 +65,11 @@
     [[Unretiner sharedInstance] unretinaUrls:urls andStayOpen:_keepOpen];
 }
 
-//- (void)application:(NSApplication*)sender openFile:(NSString*)file {
-//	NSLog(@"application:openFile:");
-//    // Send to the controller
-//    [viewController unretinaUrls:[NSArray arrayWithObject:[NSURL fileURLWithPath:file]]];
-//}
+- (BOOL)application:(NSApplication*)sender openFile:(NSString*)file {
+    // Send to the controller
+	[self application:sender openFiles:[NSArray arrayWithObject:[NSURL fileURLWithPath:file]]];
+	
+	return YES;
+}
 
 @end
