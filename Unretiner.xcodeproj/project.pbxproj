@@ -23,6 +23,7 @@
 		17C3A39213E3FF1700294FBE /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17C3A39113E3FF1700294FBE /* SenTestingKit.framework */; };
 		17C3A39313E3FF1700294FBE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17C3A37313E3FF1600294FBE /* Cocoa.framework */; };
 		726F622B150AAB1F00B2C276 /* Unretiner.m in Sources */ = {isa = PBXBuildFile; fileRef = 726F622A150AAB1F00B2C276 /* Unretiner.m */; };
+		72B86785155B46A1008BA544 /* SimpleScriptingVerbs.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 72B86784155B46A1008BA544 /* SimpleScriptingVerbs.sdef */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +67,7 @@
 		726F622A150AAB1F00B2C276 /* Unretiner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Unretiner.m; sourceTree = "<group>"; };
 		726F622C150AAB3D00B2C276 /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynthesizeSingleton.h; sourceTree = "<group>"; };
 		726F622D150AB5AF00B2C276 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		72B86784155B46A1008BA544 /* SimpleScriptingVerbs.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = SimpleScriptingVerbs.sdef; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,7 @@
 		1713EF8513E524A60019EA65 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				72B86784155B46A1008BA544 /* SimpleScriptingVerbs.sdef */,
 				1713EFA813E526AF0019EA65 /* Config */,
 				1713EF8613E524A60019EA65 /* Images */,
 			);
@@ -291,6 +294,7 @@
 				1713EFA613E526A10019EA65 /* MainMenu.xib in Resources */,
 				1713EFA713E526A10019EA65 /* UnretinaViewController.xib in Resources */,
 				1713EFAF13E57A310019EA65 /* Icon.icns in Resources */,
+				72B86785155B46A1008BA544 /* SimpleScriptingVerbs.sdef in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

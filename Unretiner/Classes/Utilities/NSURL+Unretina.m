@@ -11,7 +11,7 @@
 @implementation NSURL (Unretina)
 
 static NSString* const kRetinaString = @"@2x";
-static NSString* const kHdString = @"-hd";
+static NSString* const kHdString = @"@2x~ipad";
 
 - (BOOL)unretina:(NSURL*)folder errors:(NSMutableArray*)errors warnings:(NSMutableArray*)warnings overwrite:(BOOL)overwrite {
     BOOL success = NO;
